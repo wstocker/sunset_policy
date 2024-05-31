@@ -42,7 +42,7 @@ function sunset_policy_cron() {
   $expiredNids = $sunsetFunctions->getExpired();
 
   // Dispatch the event.
-  $event = new NysSunsetPolicyEvent($expiringNids, $expiredNids);
+  $event = new SunsetPolicyEvent($expiringNids, $expiredNids);
   $dispatcher->dispatch('nys_sunset_policy.event', $event);
 }
 
