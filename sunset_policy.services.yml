@@ -1,0 +1,8 @@
+services:
+  sunset_policy.cron:
+    class: \Drupal\sunset_policy\Cron\SunsetFunctions
+
+  sunset_policy.event_subscriber:
+    class: Drupal\sunset_policy\EventSubscriber\SunsetPolicyEventSubscriber
+    tags:
+      - { name: event_subscriber }
