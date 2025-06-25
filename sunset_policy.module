@@ -5,14 +5,10 @@
  * Contains custom code for sunset policy.
  */
 
-use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
-use Drupal\node\NodeInterface;
-
 /**
  * Implements hook_theme().
  */
-function nys_sunset_policy_theme() {
+function sunset_policy_theme() {
   return [
     'expiring_mail' => [
       'variables' => [
@@ -25,25 +21,6 @@ function nys_sunset_policy_theme() {
       ],
     ],
   ];
-}
-
-/**
- * Implements hook_cron().
- */
-/**
- * Implements hook_cron().
- */
-function sunset_policy_cron() {
-  $dispatcher = \Drupal::service('event_dispatcher');
-
-  // Get expiring and expired node IDs.
-  $sunsetFunctions = \Drupal::service('sunset_policy.cron');
-  $expiringNids = $sunsetFunctions->getExpiring();
-  $expiredNids = $sunsetFunctions->getExpired();
-
-  // Dispatch the event.
-  $event = new SunsetPolicyEvent($expiringNids, $expiredNids);
-  $dispatcher->dispatch('nys_sunset_policy.event', $event);
 }
 
 /**

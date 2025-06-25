@@ -1,8 +1,14 @@
 services:
-  sunset_policy.cron:
-    class: \Drupal\sunset_policy\Cron\SunsetFunctions
+  sunset_policy.service:
+    class: Drupal\sunset_policy\SunsetPolicyService
+    arguments: ['@entity_type.manager', '@queue', '@logger.factory']
 
-  sunset_policy.event_subscriber:
-    class: Drupal\sunset_policy\EventSubscriber\SunsetPolicyEventSubscriber
+  sunset_policy.mail_service:
+    class: Drupal\sunset_policy\SunsetPolicyMailService
+    arguments: ['@entity_type.manager', '@plugin.manager.mail', '@renderer', '@current_user', '@request_stack', '@logger.factory']
+
+  sunset_policy.cron_subscriber:
+    class: Drupal\sunset_policy\EventSubscriber\SunsetPolicyCronSubscriber
+    arguments: ['@sunset_policy.service']
     tags:
-      - { name: event_subscriber }
+      - { name: event_subscriber } 
